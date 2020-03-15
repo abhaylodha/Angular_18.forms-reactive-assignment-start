@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!--
+          Create a Form with the following Controls and Validators
+          1) Project Name (should not be empty)
+          2) Mail (should not be a empty and a valid email)
+          3) Project Status Dropdown, with three values: 'Stable', 'Critical', 'Finished'
+          4) Submit Button
+
+          Add your own Validator which doesn't allow "Test" as a Project Name
+
+          Also implement that Validator as an async Validator (replace the other one)
+
+          Upon submitting the form, simply print the value to the console
+      -->
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <label for="projectName">Project Name :</label>
+          <input type="text" id="id_projectName" class="form-control" formControlName="ctrl_projectName">
+          <span class="help-block" *ngIf="
+          signUpForm.get('ctrl_projectName').invalid &&
+          signUpForm.get('ctrl_projectName').touched">
+
+            <span class="help-block" *ngIf="
+          signUpForm.get('ctrl_projectName').errors['nameIsForbidden']">
+              This field should have test value.
+            </span>
+
+            <span class="help-block" *ngIf="
+          signUpForm.get('ctrl_projectName').errors['nameIsForbiddenAsynchronously']">
+              This field should have test1 value.
+            </span>
+
+
+            <span class="help-block" *ngIf="
+          signUpForm.get('ctrl_projectName').errors['required']">
+              This field should not be empty.
+            </span>
+
+
+
+          </span>
+        </div>
+
+
+        <div class="form-group">
+          <label for="projectName">E-Mail :</label>
+          <input type="text" id="id_email" class="form-control" formControlName="ctrl_mail">
+          <span class="help-block" *ngIf="
+          signUpForm.get('ctrl_mail').invalid &&
+          signUpForm.get('ctrl_mail').touched">This field should be valid email ID.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="projectStatus">Project Status :</label>
+          <select class="form-control" name="nm_projectStatus" id="id_projectStatus"
+            formControlName="ctrl_projectStatus">
+
+            <option [value]="projectStatus" *ngFor="let projectStatus of projectStatuses">
+              {{projectStatus}}</option>
+
+          </select>
+        </div>
+
+        <span class="help-block" *ngIf="
+        signUpForm.invalid &&
+        signUpForm.touched">Form is not valid.</span>
+
+        <button class="btn btn-primary" type="submit" [disabled]="!signUpForm.valid">Submit</button>
+
+      </form>
+    </div>
+  </div>
+</div>
